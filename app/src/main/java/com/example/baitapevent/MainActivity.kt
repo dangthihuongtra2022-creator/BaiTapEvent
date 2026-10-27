@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupEvents() {
-        // 1. Lắng nghe sự kiện gõ phím EditText
+        // 1. Lắng nghe sự kiện gõ phím EditText (Họ và tên)
         binding.etFullName.doAfterTextChanged { text ->
             if (!text.isNullOrEmpty()) {
                 Toast.makeText(this, "Đang nhập tên: $text", Toast.LENGTH_SHORT).show()
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
         }
 
-        // 4. Xử lý nút Đăng ký -> Chuyển màn hình chi tiết
+        // 4. Xử lý nút Đăng ký -> Chuyển sang màn hình chi tiết
         binding.btnSubmit.setOnClickListener {
             val name = binding.etFullName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
@@ -67,11 +67,13 @@ class MainActivity : AppCompatActivity() {
             if (binding.cbInstagram.isChecked) socials.add("Instagram")
             if (binding.cbTiktok.isChecked) socials.add("TikTok")
 
+            // Kiểm tra rỗng trước khi chuyển màn hình
             if (name.isEmpty() || email.isEmpty()) {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Gói dữ liệu và chuyển sang DetailActivity
             val intent = Intent(this, DetailActivity::class.java).apply {
                 putExtra("EXTRA_NAME", name)
                 putExtra("EXTRA_EMAIL", email)
